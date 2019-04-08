@@ -1,0 +1,380 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8959A3D2225B49D800EC2EA1 /* AppStoreConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8959A3C8225B49D800EC2EA1 /* AppStoreConnector.framework */; };
+		8959A3F5225B4C0300EC2EA1 /* ProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A3F4225B4C0300EC2EA1 /* ProjectTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8959A3D3225B49D800EC2EA1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8959A3BF225B49D800EC2EA1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8959A3C7225B49D800EC2EA1;
+			remoteInfo = AppStoreConnector;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		8959A3C8225B49D800EC2EA1 /* AppStoreConnector.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AppStoreConnector.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8959A3CC225B49D800EC2EA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8959A3D1225B49D800EC2EA1 /* AppStoreConnectorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppStoreConnectorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8959A3D8225B49D800EC2EA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8959A3E4225B4ADE00EC2EA1 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		8959A3E5225B4ADE00EC2EA1 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		8959A3E7225B4ADE00EC2EA1 /* OSX.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = OSX.xcconfig; sourceTree = "<group>"; };
+		8959A3E8225B4ADE00EC2EA1 /* iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = iOS.xcconfig; sourceTree = "<group>"; };
+		8959A3EA225B4ADE00EC2EA1 /* App.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = App.xcconfig; sourceTree = "<group>"; };
+		8959A3EB225B4ADE00EC2EA1 /* Framework.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Framework.xcconfig; sourceTree = "<group>"; };
+		8959A3EC225B4ADE00EC2EA1 /* UITest.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UITest.xcconfig; sourceTree = "<group>"; };
+		8959A3ED225B4ADE00EC2EA1 /* Test.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Test.xcconfig; sourceTree = "<group>"; };
+		8959A3EE225B4ADE00EC2EA1 /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
+		8959A3EF225B4ADE00EC2EA1 /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
+		8959A3F2225B4B8200EC2EA1 /* AppStoreConnector.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AppStoreConnector.xcconfig; sourceTree = "<group>"; };
+		8959A3F4225B4C0300EC2EA1 /* ProjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectTests.swift; sourceTree = "<group>"; };
+		8959A3F7225B4C8F00EC2EA1 /* AppStoreConnectorTests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AppStoreConnectorTests.xcconfig; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8959A3C5225B49D800EC2EA1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8959A3CE225B49D800EC2EA1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8959A3D2225B49D800EC2EA1 /* AppStoreConnector.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8959A3BE225B49D800EC2EA1 = {
+			isa = PBXGroup;
+			children = (
+				8959A3CA225B49D800EC2EA1 /* AppStoreConnector */,
+				8959A3D5225B49D800EC2EA1 /* AppStoreConnectorTests */,
+				8959A3E2225B4ADE00EC2EA1 /* Configurations */,
+				8959A3C9225B49D800EC2EA1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8959A3C9225B49D800EC2EA1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8959A3C8225B49D800EC2EA1 /* AppStoreConnector.framework */,
+				8959A3D1225B49D800EC2EA1 /* AppStoreConnectorTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8959A3CA225B49D800EC2EA1 /* AppStoreConnector */ = {
+			isa = PBXGroup;
+			children = (
+				8959A3F0225B4B2900EC2EA1 /* Sources */,
+				8959A3F1225B4B3F00EC2EA1 /* Configurations */,
+			);
+			path = AppStoreConnector;
+			sourceTree = "<group>";
+		};
+		8959A3D5225B49D800EC2EA1 /* AppStoreConnectorTests */ = {
+			isa = PBXGroup;
+			children = (
+				8959A3F3225B4BEB00EC2EA1 /* Sources */,
+				8959A3F6225B4C0600EC2EA1 /* Configurations */,
+			);
+			path = AppStoreConnectorTests;
+			sourceTree = "<group>";
+		};
+		8959A3E2225B4ADE00EC2EA1 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				8959A3E3225B4ADE00EC2EA1 /* Configurations */,
+				8959A3E6225B4ADE00EC2EA1 /* Platforms */,
+				8959A3E9225B4ADE00EC2EA1 /* Targets */,
+				8959A3EE225B4ADE00EC2EA1 /* Version.xcconfig */,
+				8959A3EF225B4ADE00EC2EA1 /* Project.xcconfig */,
+			);
+			name = Configurations;
+			path = ../Shared/Configurations;
+			sourceTree = "<group>";
+		};
+		8959A3E3225B4ADE00EC2EA1 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				8959A3E4225B4ADE00EC2EA1 /* Debug.xcconfig */,
+				8959A3E5225B4ADE00EC2EA1 /* Release.xcconfig */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		8959A3E6225B4ADE00EC2EA1 /* Platforms */ = {
+			isa = PBXGroup;
+			children = (
+				8959A3E7225B4ADE00EC2EA1 /* OSX.xcconfig */,
+				8959A3E8225B4ADE00EC2EA1 /* iOS.xcconfig */,
+			);
+			path = Platforms;
+			sourceTree = "<group>";
+		};
+		8959A3E9225B4ADE00EC2EA1 /* Targets */ = {
+			isa = PBXGroup;
+			children = (
+				8959A3EA225B4ADE00EC2EA1 /* App.xcconfig */,
+				8959A3EB225B4ADE00EC2EA1 /* Framework.xcconfig */,
+				8959A3EC225B4ADE00EC2EA1 /* UITest.xcconfig */,
+				8959A3ED225B4ADE00EC2EA1 /* Test.xcconfig */,
+			);
+			path = Targets;
+			sourceTree = "<group>";
+		};
+		8959A3F0225B4B2900EC2EA1 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		8959A3F1225B4B3F00EC2EA1 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				8959A3F2225B4B8200EC2EA1 /* AppStoreConnector.xcconfig */,
+				8959A3CC225B49D800EC2EA1 /* Info.plist */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		8959A3F3225B4BEB00EC2EA1 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				8959A3F4225B4C0300EC2EA1 /* ProjectTests.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		8959A3F6225B4C0600EC2EA1 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				8959A3F7225B4C8F00EC2EA1 /* AppStoreConnectorTests.xcconfig */,
+				8959A3D8225B49D800EC2EA1 /* Info.plist */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8959A3C3225B49D800EC2EA1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8959A3C7225B49D800EC2EA1 /* AppStoreConnector */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8959A3DC225B49D800EC2EA1 /* Build configuration list for PBXNativeTarget "AppStoreConnector" */;
+			buildPhases = (
+				8959A3C3225B49D800EC2EA1 /* Headers */,
+				8959A3C4225B49D800EC2EA1 /* Sources */,
+				8959A3C5225B49D800EC2EA1 /* Frameworks */,
+				8959A3C6225B49D800EC2EA1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AppStoreConnector;
+			productName = AppStoreConnector;
+			productReference = 8959A3C8225B49D800EC2EA1 /* AppStoreConnector.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		8959A3D0225B49D800EC2EA1 /* AppStoreConnectorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8959A3DF225B49D800EC2EA1 /* Build configuration list for PBXNativeTarget "AppStoreConnectorTests" */;
+			buildPhases = (
+				8959A3CD225B49D800EC2EA1 /* Sources */,
+				8959A3CE225B49D800EC2EA1 /* Frameworks */,
+				8959A3CF225B49D800EC2EA1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8959A3D4225B49D800EC2EA1 /* PBXTargetDependency */,
+			);
+			name = AppStoreConnectorTests;
+			productName = AppStoreConnectorTests;
+			productReference = 8959A3D1225B49D800EC2EA1 /* AppStoreConnectorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8959A3BF225B49D800EC2EA1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = "Mo Ramezanpoor";
+				TargetAttributes = {
+					8959A3C7225B49D800EC2EA1 = {
+						CreatedOnToolsVersion = 10.2;
+					};
+					8959A3D0225B49D800EC2EA1 = {
+						CreatedOnToolsVersion = 10.2;
+						LastSwiftMigration = 1020;
+					};
+				};
+			};
+			buildConfigurationList = 8959A3C2225B49D800EC2EA1 /* Build configuration list for PBXProject "AppStoreConnector" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+			);
+			mainGroup = 8959A3BE225B49D800EC2EA1;
+			productRefGroup = 8959A3C9225B49D800EC2EA1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8959A3C7225B49D800EC2EA1 /* AppStoreConnector */,
+				8959A3D0225B49D800EC2EA1 /* AppStoreConnectorTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8959A3C6225B49D800EC2EA1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8959A3CF225B49D800EC2EA1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8959A3C4225B49D800EC2EA1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8959A3CD225B49D800EC2EA1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8959A3F5225B4C0300EC2EA1 /* ProjectTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8959A3D4225B49D800EC2EA1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8959A3C7225B49D800EC2EA1 /* AppStoreConnector */;
+			targetProxy = 8959A3D3225B49D800EC2EA1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		8959A3DA225B49D800EC2EA1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8959A3E4225B4ADE00EC2EA1 /* Debug.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		8959A3DB225B49D800EC2EA1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8959A3E5225B4ADE00EC2EA1 /* Release.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		8959A3DD225B49D800EC2EA1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8959A3F2225B4B8200EC2EA1 /* AppStoreConnector.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		8959A3DE225B49D800EC2EA1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8959A3F2225B4B8200EC2EA1 /* AppStoreConnector.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		8959A3E0225B49D800EC2EA1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8959A3F7225B4C8F00EC2EA1 /* AppStoreConnectorTests.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		8959A3E1225B49D800EC2EA1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8959A3F7225B4C8F00EC2EA1 /* AppStoreConnectorTests.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8959A3C2225B49D800EC2EA1 /* Build configuration list for PBXProject "AppStoreConnector" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8959A3DA225B49D800EC2EA1 /* Debug */,
+				8959A3DB225B49D800EC2EA1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8959A3DC225B49D800EC2EA1 /* Build configuration list for PBXNativeTarget "AppStoreConnector" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8959A3DD225B49D800EC2EA1 /* Debug */,
+				8959A3DE225B49D800EC2EA1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8959A3DF225B49D800EC2EA1 /* Build configuration list for PBXNativeTarget "AppStoreConnectorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8959A3E0225B49D800EC2EA1 /* Debug */,
+				8959A3E1225B49D800EC2EA1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8959A3BF225B49D800EC2EA1 /* Project object */;
+}

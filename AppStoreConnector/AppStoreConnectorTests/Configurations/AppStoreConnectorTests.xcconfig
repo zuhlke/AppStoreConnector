@@ -1,0 +1,9 @@
+
+#include "../../../Shared/Configurations/Platforms/iOS.xcconfig"
+#include "../../../Shared/Configurations/Targets/Test.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = com.zuhlke.AppStoreConnectorTests
+
+DEVELOPMENT_TEAM = W46A5HMB5C
+
+INFOPLIST_FILE = AppStoreConnectorTests/Configurations/Info.plist
