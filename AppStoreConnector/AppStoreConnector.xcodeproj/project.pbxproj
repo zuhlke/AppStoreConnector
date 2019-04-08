@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8959A3D2225B49D800EC2EA1 /* AppStoreConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8959A3C8225B49D800EC2EA1 /* AppStoreConnector.framework */; };
 		8959A3F5225B4C0300EC2EA1 /* ProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A3F4225B4C0300EC2EA1 /* ProjectTests.swift */; };
+		8959A401225B9CF600EC2EA1 /* APIKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A400225B9CF600EC2EA1 /* APIKeyTests.swift */; };
+		8959A403225BA11400EC2EA1 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A402225BA11400EC2EA1 /* APIKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +41,8 @@
 		8959A3F2225B4B8200EC2EA1 /* AppStoreConnector.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AppStoreConnector.xcconfig; sourceTree = "<group>"; };
 		8959A3F4225B4C0300EC2EA1 /* ProjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectTests.swift; sourceTree = "<group>"; };
 		8959A3F7225B4C8F00EC2EA1 /* AppStoreConnectorTests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AppStoreConnectorTests.xcconfig; sourceTree = "<group>"; };
+		8959A400225B9CF600EC2EA1 /* APIKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyTests.swift; sourceTree = "<group>"; };
+		8959A402225BA11400EC2EA1 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +146,7 @@
 		8959A3F0225B4B2900EC2EA1 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				8959A3FC225B9C2500EC2EA1 /* Authentication */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -159,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				8959A3F4225B4C0300EC2EA1 /* ProjectTests.swift */,
+				8959A3FF225B9CE900EC2EA1 /* Authentication */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -170,6 +176,22 @@
 				8959A3D8225B49D800EC2EA1 /* Info.plist */,
 			);
 			path = Configurations;
+			sourceTree = "<group>";
+		};
+		8959A3FC225B9C2500EC2EA1 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				8959A402225BA11400EC2EA1 /* APIKey.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		8959A3FF225B9CE900EC2EA1 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				8959A400225B9CF600EC2EA1 /* APIKeyTests.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,6 +255,7 @@
 				TargetAttributes = {
 					8959A3C7225B49D800EC2EA1 = {
 						CreatedOnToolsVersion = 10.2;
+						LastSwiftMigration = 1020;
 					};
 					8959A3D0225B49D800EC2EA1 = {
 						CreatedOnToolsVersion = 10.2;
@@ -280,6 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8959A403225BA11400EC2EA1 /* APIKey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8959A3F5225B4C0300EC2EA1 /* ProjectTests.swift in Sources */,
+				8959A401225B9CF600EC2EA1 /* APIKeyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
