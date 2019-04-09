@@ -20,7 +20,7 @@ struct AuthTokenGenerator {
         // `utf8` data generation can’t fail
         let dataToSign = headerAndPayload.data(using: .utf8)!
         
-        let signature = try key.sign(dataToSign).base64URLEncodedString()
+        let signature = try key.sign(dataToSign).data(using: .jws).base64URLEncodedString()
         
         return "\(headerAndPayload).\(signature)"
     }

@@ -60,7 +60,8 @@ class TokenGeneratorTests: XCTestCase {
             let payload = try JSONDecoder().decode(Payload.self, fromBase64URLEncoded: parts[1])
             
             let message = "\(parts[0]).\(parts[1])".data(using: .utf8)!
-            let signature = Data(base64URLEncoded: parts[2]) ?? Data()
+            let signatureData = Data(base64URLEncoded: parts[2]) ?? Data()
+            let signature = try ES256Signature(data: signatureData, encoding: .jws)
             
             XCTAssertEqual(header, expectedHeader)
             XCTAssertEqual(payload, expectedPayload)

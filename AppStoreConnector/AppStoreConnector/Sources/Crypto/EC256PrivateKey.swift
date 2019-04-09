@@ -31,7 +31,7 @@ public struct EC256PrivateKey {
         }
     }
     
-    func sign(_ message: Data) throws -> Data {
+    func sign(_ message: Data) throws -> ES256Signature {
         
         let digest = self.digest(for: message)
         
@@ -44,14 +44,15 @@ public struct EC256PrivateKey {
         return try (signature as Data).toRawSignature()
     }
     
-    func verify(_ message: Data, hasSignature signature: Data) throws {
+    func verify(_ message: Data, hasSignature signature: ES256Signature) throws {
         
         let digest = self.digest(for: message)
         
         var error: Unmanaged<CFError>?
         
-        let r = signature[0..<32]
-        let s = signature[32..<64]
+        let data = signature.data(using: .jws)
+        let r = data[0..<32]
+        let s = data[32..<64]
         
         // https://crypto.stackexchange.com/questions/57731/ecdsa-signature-rs-to-asn1-der-encoding-question
         
@@ -155,7 +156,7 @@ private extension Data {
     }
     
     /// Convert an ASN.1 format EC signature returned by commoncrypto into a raw 64bit signature
-    func toRawSignature() throws -> Data {
+    func toRawSignature() throws -> ES256Signature {
         let (result, _) = self.toASN1Element()
         
         guard case let ASN1Element.seq(elements: es) = result,
@@ -165,7 +166,7 @@ private extension Data {
         }
         
         let rawSig = sigR.dropLeadingBytes() + sigS.dropLeadingBytes()
-        return rawSig
+        return try ES256Signature(data: rawSig, encoding: .jws)
     }
     
     private func readLength() -> (Int, Int) {

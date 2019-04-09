@@ -15,6 +15,7 @@
 		8959A407225BAF5100EC2EA1 /* TokenGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A406225BAF5100EC2EA1 /* TokenGeneratorTests.swift */; };
 		8959A409225BAF7B00EC2EA1 /* SampleKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A408225BAF7B00EC2EA1 /* SampleKey.swift */; };
 		8959A40C225BE82100EC2EA1 /* Data+base64URLEncoded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A40B225BE82100EC2EA1 /* Data+base64URLEncoded.swift */; };
+		89D7EDA2225C61E40095007B /* ES256Signature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D7EDA1225C61E40095007B /* ES256Signature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		8959A406225BAF5100EC2EA1 /* TokenGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenGeneratorTests.swift; sourceTree = "<group>"; };
 		8959A408225BAF7B00EC2EA1 /* SampleKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleKey.swift; sourceTree = "<group>"; };
 		8959A40B225BE82100EC2EA1 /* Data+base64URLEncoded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+base64URLEncoded.swift"; sourceTree = "<group>"; };
+		89D7EDA1225C61E40095007B /* ES256Signature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ES256Signature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				8959A402225BA11400EC2EA1 /* EC256PrivateKey.swift */,
+				89D7EDA1225C61E40095007B /* ES256Signature.swift */,
 			);
 			path = Crypto;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8959A403225BA11400EC2EA1 /* EC256PrivateKey.swift in Sources */,
+				89D7EDA2225C61E40095007B /* ES256Signature.swift in Sources */,
 				8959A40C225BE82100EC2EA1 /* Data+base64URLEncoded.swift in Sources */,
 				8959A405225BAD9A00EC2EA1 /* AuthTokenGenerator.swift in Sources */,
 			);
