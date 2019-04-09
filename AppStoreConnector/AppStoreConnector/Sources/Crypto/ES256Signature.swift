@@ -43,6 +43,7 @@ extension ES256Signature.Encoding {
     ///
     /// Spec: https://tools.ietf.org/html/rfc7518#section-3.4
     static let jws = ES256Signature.Encoding(
+        // Encoding is just r|s
         encode: { $0.r + $0.s },
         decode: { data in
             guard data.count == 64 else {
@@ -55,5 +56,72 @@ extension ES256Signature.Encoding {
             )
     }
     )
+    
+    private static let asn1Sequence = UInt8(0x30)
+    private static let asn1Integer = UInt8(0x02)
+    /// ASN.1 DER encoding
+    ///
+    /// Spec: https://tools.ietf.org/html/rfc5480#appendix-A
+    static let asn1 = ES256Signature.Encoding(
+        // Signature is encoded as:
+        // ECDSA-Sig-Value ::= SEQUENCE {
+        //   r  INTEGER,
+        //   s  INTEGER
+        // }
+        encode: { signature in
+            
+            let makeASN1Int = { (value: Data) -> Data in
+                // DER encoding requires the top bit to be zero
+                let hasLeadingZero = (value.first! & 0b1000_0000) == 0
+                let header: Data
+                if hasLeadingZero {
+                    header = Data([asn1Integer, UInt8(value.count)])
+                } else {
+                    header = Data([asn1Integer, UInt8(value.count) + 1, 0])
+                }
+                return header + value
+            }
+            
+            let integers = makeASN1Int(signature.r) + makeASN1Int(signature.s)
+            return Data([asn1Sequence, UInt8(integers.count)]) + integers
+    },
+        decode: { data in
+            var sequence = data
+            guard sequence.popFirst() == asn1Sequence else {
+                throw Errors.invalidSignatureData
+            }
+            
+            let length = sequence.popFirst()
+            guard
+                length == UInt8(sequence.count) else {
+                throw Errors.invalidSignatureData
+            }
+            
+            let readInteger = { () -> Data in
+                guard sequence.popFirst() == asn1Integer else {
+                    throw Errors.invalidSignatureData
+                }
+                
+                // there may be a leading zero, so `encodedLength` may be larger
+                let intLength = 32
+                let encodedLength = Int(sequence.popFirst() ?? 0)
+                guard encodedLength >= intLength else {
+                    throw Errors.invalidSignatureData
+                }
+                
+                let integerWithPotentialLeadingZero = sequence.prefix(encodedLength)
+                
+                sequence = sequence.suffix(from: sequence.startIndex + encodedLength)
+                
+                return integerWithPotentialLeadingZero.suffix(intLength)
+            }
+            
+            return ES256Signature(
+                r: try readInteger(),
+                s: try readInteger()
+            )
+    }
+    )
+    
     
 }

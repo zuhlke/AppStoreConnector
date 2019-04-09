@@ -41,34 +41,15 @@ public struct EC256PrivateKey {
             throw Errors.signingFailed(underlyingError: error?.takeRetainedValue())
         }
         
-        return try (signature as Data).toRawSignature()
+        return try ES256Signature(data: signature as Data, encoding: .asn1)
     }
     
     func verify(_ message: Data, hasSignature signature: ES256Signature) throws {
         
         let digest = self.digest(for: message)
+        let asn1 = signature.data(using: .asn1)
         
         var error: Unmanaged<CFError>?
-        
-        let data = signature.data(using: .jws)
-        let r = data[0..<32]
-        let s = data[32..<64]
-        
-        // https://crypto.stackexchange.com/questions/57731/ecdsa-signature-rs-to-asn1-der-encoding-question
-        
-        let makeASN1Int = { (value: Data) -> Data in
-            let hasLeadingZero = (value.first! & 0b1000_0000) == 0
-            let header: Data
-            if hasLeadingZero {
-                header = Data([2, UInt8(value.count)])
-            } else {
-                header = Data([2, UInt8(value.count) + 1, 0])
-            }
-            return header + value
-        }
-        
-        let integers = makeASN1Int(r) + makeASN1Int(s)
-        let asn1 = Data([0x30, UInt8(integers.count)]) + integers
 
         guard
             let publicKey = SecKeyCopyPublicKey(key),
@@ -145,28 +126,6 @@ private extension Data {
                                     throw EC256PrivateKey.Errors.privateKeyConversionFailed
         }
         return privateKey
-    }
-    
-    // SecKeyCreateSignature seems to sometimes return a leading zero; strip it out
-    private func dropLeadingBytes() -> Data {
-        if self.count == 33 {
-            return self.dropFirst()
-        }
-        return self
-    }
-    
-    /// Convert an ASN.1 format EC signature returned by commoncrypto into a raw 64bit signature
-    func toRawSignature() throws -> ES256Signature {
-        let (result, _) = self.toASN1Element()
-        
-        guard case let ASN1Element.seq(elements: es) = result,
-            case let ASN1Element.bytes(data: sigR) = es[0],
-            case let ASN1Element.bytes(data: sigS) = es[1] else {
-                throw EC256PrivateKey.Errors.invalidASN1
-        }
-        
-        let rawSig = sigR.dropLeadingBytes() + sigS.dropLeadingBytes()
-        return try ES256Signature(data: rawSig, encoding: .jws)
     }
     
     private func readLength() -> (Int, Int) {
