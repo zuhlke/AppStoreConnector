@@ -11,6 +11,10 @@
 		8959A3F5225B4C0300EC2EA1 /* ProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A3F4225B4C0300EC2EA1 /* ProjectTests.swift */; };
 		8959A401225B9CF600EC2EA1 /* APIKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A400225B9CF600EC2EA1 /* APIKeyTests.swift */; };
 		8959A403225BA11400EC2EA1 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A402225BA11400EC2EA1 /* APIKey.swift */; };
+		8959A405225BAD9A00EC2EA1 /* AuthTokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A404225BAD9A00EC2EA1 /* AuthTokenGenerator.swift */; };
+		8959A407225BAF5100EC2EA1 /* TokenGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A406225BAF5100EC2EA1 /* TokenGeneratorTests.swift */; };
+		8959A409225BAF7B00EC2EA1 /* SampleKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A408225BAF7B00EC2EA1 /* SampleKey.swift */; };
+		8959A40C225BE82100EC2EA1 /* Data+base64URLEncoded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A40B225BE82100EC2EA1 /* Data+base64URLEncoded.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +47,10 @@
 		8959A3F7225B4C8F00EC2EA1 /* AppStoreConnectorTests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AppStoreConnectorTests.xcconfig; sourceTree = "<group>"; };
 		8959A400225B9CF600EC2EA1 /* APIKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyTests.swift; sourceTree = "<group>"; };
 		8959A402225BA11400EC2EA1 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		8959A404225BAD9A00EC2EA1 /* AuthTokenGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenGenerator.swift; sourceTree = "<group>"; };
+		8959A406225BAF5100EC2EA1 /* TokenGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenGeneratorTests.swift; sourceTree = "<group>"; };
+		8959A408225BAF7B00EC2EA1 /* SampleKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleKey.swift; sourceTree = "<group>"; };
+		8959A40B225BE82100EC2EA1 /* Data+base64URLEncoded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+base64URLEncoded.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +154,7 @@
 		8959A3F0225B4B2900EC2EA1 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				8959A40A225BE81500EC2EA1 /* Extensions */,
 				8959A3FC225B9C2500EC2EA1 /* Authentication */,
 			);
 			path = Sources;
@@ -182,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				8959A402225BA11400EC2EA1 /* APIKey.swift */,
+				8959A404225BAD9A00EC2EA1 /* AuthTokenGenerator.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -189,9 +199,19 @@
 		8959A3FF225B9CE900EC2EA1 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				8959A408225BAF7B00EC2EA1 /* SampleKey.swift */,
 				8959A400225B9CF600EC2EA1 /* APIKeyTests.swift */,
+				8959A406225BAF5100EC2EA1 /* TokenGeneratorTests.swift */,
 			);
 			path = Authentication;
+			sourceTree = "<group>";
+		};
+		8959A40A225BE81500EC2EA1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8959A40B225BE82100EC2EA1 /* Data+base64URLEncoded.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,6 +288,7 @@
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				en,
 				Base,
 			);
 			mainGroup = 8959A3BE225B49D800EC2EA1;
@@ -304,6 +325,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8959A403225BA11400EC2EA1 /* APIKey.swift in Sources */,
+				8959A40C225BE82100EC2EA1 /* Data+base64URLEncoded.swift in Sources */,
+				8959A405225BAD9A00EC2EA1 /* AuthTokenGenerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,6 +334,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8959A407225BAF5100EC2EA1 /* TokenGeneratorTests.swift in Sources */,
+				8959A409225BAF7B00EC2EA1 /* SampleKey.swift in Sources */,
 				8959A3F5225B4C0300EC2EA1 /* ProjectTests.swift in Sources */,
 				8959A401225B9CF600EC2EA1 /* APIKeyTests.swift in Sources */,
 			);

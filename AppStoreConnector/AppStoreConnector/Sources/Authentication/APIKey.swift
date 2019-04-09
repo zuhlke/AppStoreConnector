@@ -1,4 +1,6 @@
 import Foundation
+import CommonCrypto
+import Security
 
 /// A Key for communicating with App Store Connect API
 public struct APIKey {
@@ -8,21 +10,68 @@ public struct APIKey {
         case privateKeyConversionFailed
         case invalidASN1
         case invalidPrivateKey(underlyingError: Error)
+        case signingFailed(underlyingError: CFError?)
+        case verificationFailed(underlyingError: CFError?)
     }
     
     private let key: SecKey
     
     /// Creates an API Key
     ///
-    /// `pemFormattedString` both with or with PEM header lines are supported
+    /// `pemFormatted` both with or with PEM header lines are supported
     ///
-    /// - Parameter pemFormattedString: A PEM formatted private key data.
-    /// - Throws: If the `pemFormattedString` is not in the expected shape for an App Store Connect key
-    public init(pemFormattedString: String) throws {
+    /// - Parameter pemFormatted: A PEM formatted private key data.
+    /// - Throws: If the `pemFormatted` is not in the expected shape for an App Store Connect key
+    public init(pemFormatted: String) throws {
         do {
-            key = try type(of: self).makeSecKey(from: pemFormattedString)
+            key = try type(of: self).makeSecKey(from: pemFormatted)
         } catch {
             throw Errors.invalidPrivateKey(underlyingError: error)
+        }
+    }
+    
+    func sign(_ message: Data) throws -> Data {
+        
+        let digest = self.digest(for: message)
+        
+        var error: Unmanaged<CFError>?
+        
+        guard let signature = SecKeyCreateSignature(key, .ecdsaSignatureDigestX962SHA256, digest as CFData, &error) else {
+            throw Errors.signingFailed(underlyingError: error?.takeRetainedValue())
+        }
+        
+        return try (signature as Data).toRawSignature()
+    }
+    
+    func verify(_ message: Data, hasSignature signature: Data) throws {
+        
+        let digest = self.digest(for: message)
+        
+        var error: Unmanaged<CFError>?
+        
+        let r = signature[0..<32]
+        let s = signature[32..<64]
+        
+        // https://crypto.stackexchange.com/questions/57731/ecdsa-signature-rs-to-asn1-der-encoding-question
+        
+        let makeASN1Int = { (value: Data) -> Data in
+            let hasLeadingZero = (value.first! & 0b1000_0000) == 0
+            let header: Data
+            if hasLeadingZero {
+                header = Data([2, UInt8(value.count)])
+            } else {
+                header = Data([2, UInt8(value.count) + 1, 0])
+            }
+            return header + value
+        }
+        
+        let integers = makeASN1Int(r) + makeASN1Int(s)
+        let asn1 = Data([0x30, UInt8(integers.count)]) + integers
+
+        guard
+            let publicKey = SecKeyCopyPublicKey(key),
+            SecKeyVerifySignature(publicKey, .ecdsaSignatureDigestX962SHA256, digest as CFData, asn1 as CFData, &error) else {
+                throw Errors.verificationFailed(underlyingError: error?.takeRetainedValue())
         }
     }
     
@@ -39,6 +88,12 @@ private extension APIKey {
             throw Errors.dataIsNotBase64Encoded
         }
         return try asn1.toECKeyData().toPrivateKey()
+    }
+    
+    private func digest(for message: Data) -> Data {
+        var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+        CC_SHA256((message as NSData).bytes, CC_LONG(message.count), &hash)
+        return Data(hash)
     }
     
 }
