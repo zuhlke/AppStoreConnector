@@ -16,6 +16,7 @@
 		8959A409225BAF7B00EC2EA1 /* SampleKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A408225BAF7B00EC2EA1 /* SampleKey.swift */; };
 		8959A40C225BE82100EC2EA1 /* Data+base64URLEncoded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A40B225BE82100EC2EA1 /* Data+base64URLEncoded.swift */; };
 		89D7EDA2225C61E40095007B /* ES256Signature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D7EDA1225C61E40095007B /* ES256Signature.swift */; };
+		89D7EDA4225C98F90095007B /* ASN1Scanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D7EDA3225C98F90095007B /* ASN1Scanner.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		8959A408225BAF7B00EC2EA1 /* SampleKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleKey.swift; sourceTree = "<group>"; };
 		8959A40B225BE82100EC2EA1 /* Data+base64URLEncoded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+base64URLEncoded.swift"; sourceTree = "<group>"; };
 		89D7EDA1225C61E40095007B /* ES256Signature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ES256Signature.swift; sourceTree = "<group>"; };
+		89D7EDA3225C98F90095007B /* ASN1Scanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASN1Scanner.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +220,7 @@
 		89D7ED9F225C5DF50095007B /* Crypto */ = {
 			isa = PBXGroup;
 			children = (
+				89D7EDA3225C98F90095007B /* ASN1Scanner.swift */,
 				8959A402225BA11400EC2EA1 /* EC256PrivateKey.swift */,
 				89D7EDA1225C61E40095007B /* ES256Signature.swift */,
 			);
@@ -347,6 +350,7 @@
 				89D7EDA2225C61E40095007B /* ES256Signature.swift in Sources */,
 				8959A40C225BE82100EC2EA1 /* Data+base64URLEncoded.swift in Sources */,
 				8959A405225BAD9A00EC2EA1 /* AuthTokenGenerator.swift in Sources */,
+				89D7EDA4225C98F90095007B /* ASN1Scanner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

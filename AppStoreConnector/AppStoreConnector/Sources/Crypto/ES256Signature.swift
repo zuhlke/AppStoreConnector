@@ -86,34 +86,20 @@ extension ES256Signature.Encoding {
             return Data([asn1Sequence, UInt8(integers.count)]) + integers
     },
         decode: { data in
-            var sequence = data
-            guard sequence.popFirst() == asn1Sequence else {
-                throw Errors.invalidSignatureData
-            }
+            var scanner = ASN1Scanner(data: data)
             
-            let length = sequence.popFirst()
-            guard
-                length == UInt8(sequence.count) else {
-                throw Errors.invalidSignatureData
-            }
+            try scanner.scanSequenceHeader()
             
             let readInteger = { () -> Data in
-                guard sequence.popFirst() == asn1Integer else {
+                let integer = try scanner.scanInteger()
+                
+                // there may be leading a zero in `integer`. Trim it
+                let expectedLength = 32
+                guard integer.count >= expectedLength else {
                     throw Errors.invalidSignatureData
                 }
                 
-                // there may be a leading zero, so `encodedLength` may be larger
-                let intLength = 32
-                let encodedLength = Int(sequence.popFirst() ?? 0)
-                guard encodedLength >= intLength else {
-                    throw Errors.invalidSignatureData
-                }
-                
-                let integerWithPotentialLeadingZero = sequence.prefix(encodedLength)
-                
-                sequence = sequence.suffix(from: sequence.startIndex + encodedLength)
-                
-                return integerWithPotentialLeadingZero.suffix(intLength)
+                return integer.suffix(expectedLength)
             }
             
             return ES256Signature(
