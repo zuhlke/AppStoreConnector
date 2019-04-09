@@ -25,7 +25,8 @@ public struct EC256PrivateKey {
     /// - Throws: If `pemFormatted` is not in the expected shape
     public init(pemFormatted: String) throws {
         do {
-            key = try type(of: self).makeSecKey(from: pemFormatted)
+            let scalars = try EC256PrivateKeyScalars(pemFormatted: pemFormatted)
+            key = try scalars.makePrivateKey()
         } catch {
             throw Errors.invalidPrivateKey(underlyingError: error)
         }
@@ -62,17 +63,6 @@ public struct EC256PrivateKey {
 
 private extension EC256PrivateKey {
     
-    static func makeSecKey(from pemFormatted: String) throws -> SecKey {
-        let undecoratedString = pemFormatted
-            .split(separator: "\n")
-            .filter { !($0.isEmpty || $0.hasPrefix("-----")) }
-            .joined()
-        guard let asn1 = Data(base64Encoded: undecoratedString) else {
-            throw Errors.dataIsNotBase64Encoded
-        }
-        return try asn1.toECKeyData().toPrivateKey()
-    }
-    
     private func digest(for message: Data) -> Data {
         var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
         CC_SHA256((message as NSData).bytes, CC_LONG(message.count), &hash)
@@ -81,44 +71,94 @@ private extension EC256PrivateKey {
     
 }
 
-// Source: [AppStoreConnect-Swift-SDK](https://github.com/AvdLee/appstoreconnect-swift-sdk)
-// Created by Antoine van der Lee on 08/11/2018.
-
-private extension Data {
+private struct EC256PrivateKeyScalars {
+    // All scalars are 32 bytes
+    private var k: Data
+    private var x: Data
+    private var y: Data
     
-    private indirect enum ASN1Element {
-        case seq(elements: [ASN1Element])
-        case integer(int: Int)
-        case bytes(data: Data)
-        case constructed(tag: Int, elem: ASN1Element)
-        case unknown
+    init(pemFormatted: String) throws {
+        let undecoratedString = pemFormatted
+            .split(separator: "\n")
+            .filter { !($0.isEmpty || $0.hasPrefix("-----")) }
+            .joined()
+        guard let asn1 = Data(base64Encoded: undecoratedString) else {
+            throw EC256PrivateKey.Errors.dataIsNotBase64Encoded
+        }
+        try self.init(asn1: asn1)
     }
     
-    func toECKeyData() throws -> Data {
-        let (result, _) = toASN1Element()
+    init(asn1: Data) throws {
         
-        guard case let ASN1Element.seq(elements: es) = result,
-            case let ASN1Element.bytes(data: privateOctest) = es[2] else {
-                throw EC256PrivateKey.Errors.invalidASN1
+        // Expecting PKCS#8 content
+        // Spec: https://tools.ietf.org/html/rfc5208#appendix-A
+        
+        // PrivateKeyInfo ::= SEQUENCE {
+        //     version Version,
+        //     privateKeyAlgorithm AlgorithmIdentifier {{PrivateKeyAlgorithms}},
+        //     privateKey PrivateKey,
+        //     attributes [0] Attributes OPTIONAL
+        // }
+        
+        var scanner = ASN1Scanner(data: asn1)
+        try scanner.scanSequenceHeader()
+        
+        // Version ::= INTEGER {v1(0)} (v1,...)
+        let version = try scanner.scanInteger()
+        guard version == Data([0]) else {
+            throw EC256PrivateKey.Errors.invalidASN1
         }
         
-        let (octest, _) = privateOctest.toASN1Element()
-        guard case let ASN1Element.seq(elements: seq) = octest,
-            case let ASN1Element.bytes(data: privateKeyData) = seq[1],
-            case let ASN1Element.constructed(tag: _, elem: publicElement) = seq[3],
-            case let ASN1Element.bytes(data: publicKeyData) = publicElement else {
-                throw EC256PrivateKey.Errors.invalidASN1
+        // AlgorithmIdentifier (https://tools.ietf.org/html/rfc5280#section-4.1.1.2)
+        // AlgorithmIdentifier  ::=  SEQUENCE  {
+        //     algorithm               OBJECT IDENTIFIER,
+        //     parameters              ANY DEFINED BY algorithm OPTIONAL
+        // }
+        let algorithmIdentifierLength = try scanner.scanSequenceHeader()
+        scanner.stream = scanner.stream.dropFirst(algorithmIdentifierLength)
+        
+        // PrivateKey octet data should contain an ECPrivateKey
+        // spec: https://tools.ietf.org/html/rfc5915
+        // ECPrivateKey ::= SEQUENCE {
+        //     version        INTEGER { ecPrivkeyVer1(1) } (ecPrivkeyVer1),
+        //     privateKey     OCTET STRING,
+        //     parameters [0] ECParameters {{ NamedCurve }} OPTIONAL,
+        //     publicKey  [1] BIT STRING OPTIONAL
+        // }
+        let privateKeyData = try scanner.scanOctet()
+        var privateKeyScanner = ASN1Scanner(data: privateKeyData)
+        
+        try privateKeyScanner.scanSequenceHeader()
+        let ecVersion = try privateKeyScanner.scanInteger()
+        guard ecVersion == Data([1]) else {
+            throw EC256PrivateKey.Errors.invalidASN1
         }
         
-        let keyData = (publicKeyData.drop(while: { $0 == 0x00}) + privateKeyData)
-        return keyData
+        // privateKey
+        k = try privateKeyScanner.scanOctet()
+        
+        // parameters
+        try privateKeyScanner.scanTag(0)
+        
+        // public key
+        try privateKeyScanner.scanTagHeader(1)
+        let publicKey = try privateKeyScanner.scanBitString()
+        let publicKeyIsUncompressed = publicKey.starts(with: [0x00, 0x04])
+        guard publicKeyIsUncompressed else {
+            throw EC256PrivateKey.Errors.invalidASN1
+        }
+        
+        x = publicKey[publicKey.startIndex+2..<publicKey.startIndex+2+32]
+        y = publicKey[publicKey.startIndex+2+32..<publicKey.startIndex+2+32+32]
     }
     
-    func toPrivateKey() throws -> SecKey {
+    func makePrivateKey() throws -> SecKey {
+        // See `SecKeyCopyExternalRepresentation`
+        let data = Data([4]) + x + y + k
+        
         var error: Unmanaged<CFError>?
-        
         guard let privateKey =
-            SecKeyCreateWithData(self as CFData,
+            SecKeyCreateWithData(data as CFData,
                                  [kSecAttrKeyType: kSecAttrKeyTypeECSECPrimeRandom,
                                   kSecAttrKeyClass: kSecAttrKeyClassPrivate,
                                   kSecAttrKeySizeInBits: 256] as CFDictionary,
@@ -128,64 +168,4 @@ private extension Data {
         return privateKey
     }
     
-    private func readLength() -> (Int, Int) {
-        if self[0] & 0x80 == 0x00 { // short form
-            return (Int(self[0]), 1)
-        } else {
-            let lenghOfLength = Int(self[0] & 0x7F)
-            var result: Int = 0
-            for i in 1..<(1 + lenghOfLength) {
-                result = 256 * result + Int(self[i])
-            }
-            return (result, 1 + lenghOfLength)
-        }
-    }
-    
-    private func toASN1Element() -> (ASN1Element, Int) {
-        guard self.count >= 2 else {
-            // format error
-            return (.unknown, self.count)
-        }
-        
-        switch self[0] {
-        case 0x30: // sequence
-            let (length, lengthOfLength) = self.advanced(by: 1).readLength()
-            var result: [ASN1Element] = []
-            var subdata = self.advanced(by: 1 + lengthOfLength)
-            var alreadyRead = 0
-            
-            while alreadyRead < length {
-                let (e, l) = subdata.toASN1Element()
-                result.append(e)
-                subdata = subdata.count > l ? subdata.advanced(by: l) : Data()
-                alreadyRead += l
-            }
-            return (.seq(elements: result), 1 + lengthOfLength + length)
-            
-        case 0x02: // integer
-            let (length, lengthOfLength) = self.advanced(by: 1).readLength()
-            if length < 8 {
-                var result: Int = 0
-                let subdata = self.advanced(by: 1 + lengthOfLength)
-                // ignore negative case
-                for i in 0..<length {
-                    result = 256 * result + Int(subdata[i])
-                }
-                return (.integer(int: result), 1 + lengthOfLength + length)
-            }
-            // number is too large to fit in Int; return the bytes
-            return (.bytes(data: self.subdata(in: (1 + lengthOfLength) ..< (1 + lengthOfLength + length))), 1 + lengthOfLength + length)
-            
-        case let s where (s & 0xe0) == 0xa0: // constructed
-            let tag = Int(s & 0x1f)
-            let (length, lengthOfLength) = self.advanced(by: 1).readLength()
-            let subdata = self.advanced(by: 1 + lengthOfLength)
-            let (e, _) = subdata.toASN1Element()
-            return (.constructed(tag: tag, elem: e), 1 + lengthOfLength + length)
-            
-        default: // octet string
-            let (length, lengthOfLength) = self.advanced(by: 1).readLength()
-            return (.bytes(data: self.subdata(in: (1 + lengthOfLength) ..< (1 + lengthOfLength + length))), 1 + lengthOfLength + length)
-        }
-    }
 }
