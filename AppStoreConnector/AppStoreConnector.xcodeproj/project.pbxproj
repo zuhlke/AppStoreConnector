@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		8959A3D2225B49D800EC2EA1 /* AppStoreConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8959A3C8225B49D800EC2EA1 /* AppStoreConnector.framework */; };
 		8959A3F5225B4C0300EC2EA1 /* ProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A3F4225B4C0300EC2EA1 /* ProjectTests.swift */; };
-		8959A401225B9CF600EC2EA1 /* APIKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A400225B9CF600EC2EA1 /* APIKeyTests.swift */; };
-		8959A403225BA11400EC2EA1 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A402225BA11400EC2EA1 /* APIKey.swift */; };
+		8959A401225B9CF600EC2EA1 /* EC256PrivateKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A400225B9CF600EC2EA1 /* EC256PrivateKeyTests.swift */; };
+		8959A403225BA11400EC2EA1 /* EC256PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A402225BA11400EC2EA1 /* EC256PrivateKey.swift */; };
 		8959A405225BAD9A00EC2EA1 /* AuthTokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A404225BAD9A00EC2EA1 /* AuthTokenGenerator.swift */; };
 		8959A407225BAF5100EC2EA1 /* TokenGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A406225BAF5100EC2EA1 /* TokenGeneratorTests.swift */; };
 		8959A409225BAF7B00EC2EA1 /* SampleKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A408225BAF7B00EC2EA1 /* SampleKey.swift */; };
@@ -45,8 +45,8 @@
 		8959A3F2225B4B8200EC2EA1 /* AppStoreConnector.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AppStoreConnector.xcconfig; sourceTree = "<group>"; };
 		8959A3F4225B4C0300EC2EA1 /* ProjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectTests.swift; sourceTree = "<group>"; };
 		8959A3F7225B4C8F00EC2EA1 /* AppStoreConnectorTests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AppStoreConnectorTests.xcconfig; sourceTree = "<group>"; };
-		8959A400225B9CF600EC2EA1 /* APIKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyTests.swift; sourceTree = "<group>"; };
-		8959A402225BA11400EC2EA1 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		8959A400225B9CF600EC2EA1 /* EC256PrivateKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EC256PrivateKeyTests.swift; sourceTree = "<group>"; };
+		8959A402225BA11400EC2EA1 /* EC256PrivateKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EC256PrivateKey.swift; sourceTree = "<group>"; };
 		8959A404225BAD9A00EC2EA1 /* AuthTokenGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenGenerator.swift; sourceTree = "<group>"; };
 		8959A406225BAF5100EC2EA1 /* TokenGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenGeneratorTests.swift; sourceTree = "<group>"; };
 		8959A408225BAF7B00EC2EA1 /* SampleKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleKey.swift; sourceTree = "<group>"; };
@@ -155,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				8959A40A225BE81500EC2EA1 /* Extensions */,
+				89D7ED9F225C5DF50095007B /* Crypto */,
 				8959A3FC225B9C2500EC2EA1 /* Authentication */,
 			);
 			path = Sources;
@@ -173,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				8959A3F4225B4C0300EC2EA1 /* ProjectTests.swift */,
+				89D7EDA0225C5E080095007B /* Crypto */,
 				8959A3FF225B9CE900EC2EA1 /* Authentication */,
 			);
 			path = Sources;
@@ -190,7 +192,6 @@
 		8959A3FC225B9C2500EC2EA1 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				8959A402225BA11400EC2EA1 /* APIKey.swift */,
 				8959A404225BAD9A00EC2EA1 /* AuthTokenGenerator.swift */,
 			);
 			path = Authentication;
@@ -199,8 +200,6 @@
 		8959A3FF225B9CE900EC2EA1 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				8959A408225BAF7B00EC2EA1 /* SampleKey.swift */,
-				8959A400225B9CF600EC2EA1 /* APIKeyTests.swift */,
 				8959A406225BAF5100EC2EA1 /* TokenGeneratorTests.swift */,
 			);
 			path = Authentication;
@@ -212,6 +211,23 @@
 				8959A40B225BE82100EC2EA1 /* Data+base64URLEncoded.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		89D7ED9F225C5DF50095007B /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				8959A402225BA11400EC2EA1 /* EC256PrivateKey.swift */,
+			);
+			path = Crypto;
+			sourceTree = "<group>";
+		};
+		89D7EDA0225C5E080095007B /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				8959A408225BAF7B00EC2EA1 /* SampleKey.swift */,
+				8959A400225B9CF600EC2EA1 /* EC256PrivateKeyTests.swift */,
+			);
+			path = Crypto;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -324,7 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8959A403225BA11400EC2EA1 /* APIKey.swift in Sources */,
+				8959A403225BA11400EC2EA1 /* EC256PrivateKey.swift in Sources */,
 				8959A40C225BE82100EC2EA1 /* Data+base64URLEncoded.swift in Sources */,
 				8959A405225BAD9A00EC2EA1 /* AuthTokenGenerator.swift in Sources */,
 			);
@@ -337,7 +353,7 @@
 				8959A407225BAF5100EC2EA1 /* TokenGeneratorTests.swift in Sources */,
 				8959A409225BAF7B00EC2EA1 /* SampleKey.swift in Sources */,
 				8959A3F5225B4C0300EC2EA1 /* ProjectTests.swift in Sources */,
-				8959A401225B9CF600EC2EA1 /* APIKeyTests.swift in Sources */,
+				8959A401225B9CF600EC2EA1 /* EC256PrivateKeyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

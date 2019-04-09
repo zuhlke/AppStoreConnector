@@ -1,18 +1,18 @@
 import XCTest
 import AppStoreConnector
 
-class APIKeyTests: XCTestCase {
+class EC256PrivateKeyTests: XCTestCase {
     
     func testThatInitializerThrowsForInvalidPrivateKey() {
-        XCTAssertThrowsError(try APIKey(pemFormatted: UUID().uuidString))
+        XCTAssertThrowsError(try EC256PrivateKey(pemFormatted: UUID().uuidString))
     }
     
     func testThatInitializerDoesNotThrowForValidPrivateKeyWithoutPEMDecoration() {
-        XCTAssertNoThrow(try APIKey(pemFormatted: SampleKey.pemString))
+        XCTAssertNoThrow(try EC256PrivateKey(pemFormatted: SampleKey.pemString))
     }
     
     func testThatInitializerDoesNotThrowForValidPrivateKeyWithPEMDecoration() {
-        XCTAssertNoThrow(try APIKey(pemFormatted: SampleKey.pemStringWithDecodaration))
+        XCTAssertNoThrow(try EC256PrivateKey(pemFormatted: SampleKey.pemStringWithDecodaration))
     }
     
 }

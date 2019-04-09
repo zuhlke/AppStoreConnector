@@ -2,8 +2,8 @@ import Foundation
 import CommonCrypto
 import Security
 
-/// A Key for communicating with App Store Connect API
-public struct APIKey {
+/// An elliptic curve private key
+public struct EC256PrivateKey {
     
     fileprivate enum Errors: Error {
         case dataIsNotBase64Encoded
@@ -14,14 +14,15 @@ public struct APIKey {
         case verificationFailed(underlyingError: CFError?)
     }
     
+    /// The key is guaranteed to be a 256-bit elliptic curve private key
     private let key: SecKey
     
-    /// Creates an API Key
+    /// Creates a private key
     ///
     /// `pemFormatted` both with or with PEM header lines are supported
     ///
     /// - Parameter pemFormatted: A PEM formatted private key data.
-    /// - Throws: If the `pemFormatted` is not in the expected shape for an App Store Connect key
+    /// - Throws: If `pemFormatted` is not in the expected shape
     public init(pemFormatted: String) throws {
         do {
             key = try type(of: self).makeSecKey(from: pemFormatted)
@@ -77,7 +78,7 @@ public struct APIKey {
     
 }
 
-private extension APIKey {
+private extension EC256PrivateKey {
     
     static func makeSecKey(from pemFormatted: String) throws -> SecKey {
         let undecoratedString = pemFormatted
@@ -116,7 +117,7 @@ private extension Data {
         
         guard case let ASN1Element.seq(elements: es) = result,
             case let ASN1Element.bytes(data: privateOctest) = es[2] else {
-                throw APIKey.Errors.invalidASN1
+                throw EC256PrivateKey.Errors.invalidASN1
         }
         
         let (octest, _) = privateOctest.toASN1Element()
@@ -124,7 +125,7 @@ private extension Data {
             case let ASN1Element.bytes(data: privateKeyData) = seq[1],
             case let ASN1Element.constructed(tag: _, elem: publicElement) = seq[3],
             case let ASN1Element.bytes(data: publicKeyData) = publicElement else {
-                throw APIKey.Errors.invalidASN1
+                throw EC256PrivateKey.Errors.invalidASN1
         }
         
         let keyData = (publicKeyData.drop(while: { $0 == 0x00}) + privateKeyData)
@@ -140,7 +141,7 @@ private extension Data {
                                   kSecAttrKeyClass: kSecAttrKeyClassPrivate,
                                   kSecAttrKeySizeInBits: 256] as CFDictionary,
                                  &error) else {
-                                    throw APIKey.Errors.privateKeyConversionFailed
+                                    throw EC256PrivateKey.Errors.privateKeyConversionFailed
         }
         return privateKey
     }
@@ -160,7 +161,7 @@ private extension Data {
         guard case let ASN1Element.seq(elements: es) = result,
             case let ASN1Element.bytes(data: sigR) = es[0],
             case let ASN1Element.bytes(data: sigS) = es[1] else {
-                throw APIKey.Errors.invalidASN1
+                throw EC256PrivateKey.Errors.invalidASN1
         }
         
         let rawSig = sigR.dropLeadingBytes() + sigS.dropLeadingBytes()

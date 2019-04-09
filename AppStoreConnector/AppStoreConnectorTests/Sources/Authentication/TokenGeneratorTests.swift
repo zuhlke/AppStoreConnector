@@ -15,7 +15,7 @@ class TokenGeneratorTests: XCTestCase {
         var aud: String
     }
     
-    private let key: APIKey! = try? APIKey(pemFormatted: SampleKey.pemString)
+    private let key: EC256PrivateKey! = try? EC256PrivateKey(pemFormatted: SampleKey.pemString)
     
     override func setUp() {
         super.setUp()

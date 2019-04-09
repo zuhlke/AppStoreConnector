@@ -2,7 +2,7 @@ import Foundation
 
 struct AuthTokenGenerator {
     
-    var key: APIKey
+    var key: EC256PrivateKey
     var keyID: String
     var issuerID: String
     
