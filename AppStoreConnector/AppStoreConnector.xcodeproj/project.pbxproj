@@ -55,6 +55,7 @@
 		8959A40B225BE82100EC2EA1 /* Data+base64URLEncoded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+base64URLEncoded.swift"; sourceTree = "<group>"; };
 		89D7EDA1225C61E40095007B /* ES256Signature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ES256Signature.swift; sourceTree = "<group>"; };
 		89D7EDA3225C98F90095007B /* ASN1Scanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASN1Scanner.swift; sourceTree = "<group>"; };
+		89D7EDA5225CC3950095007B /* All.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = All.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +141,7 @@
 			children = (
 				8959A3E7225B4ADE00EC2EA1 /* OSX.xcconfig */,
 				8959A3E8225B4ADE00EC2EA1 /* iOS.xcconfig */,
+				89D7EDA5225CC3950095007B /* All.xcconfig */,
 			);
 			path = Platforms;
 			sourceTree = "<group>";
