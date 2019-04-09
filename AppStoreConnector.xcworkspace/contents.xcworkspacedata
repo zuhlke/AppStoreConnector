@@ -4,4 +4,11 @@
    <FileRef
       location = "group:AppStoreConnector/AppStoreConnector.xcodeproj">
    </FileRef>
+   <Group
+      location = "container:Carthage/Checkouts"
+      name = "Dependencies">
+      <FileRef
+         location = "group:RxSwift/Rx.xcodeproj">
+      </FileRef>
+   </Group>
 </Workspace>
