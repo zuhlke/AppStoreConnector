@@ -6,6 +6,7 @@ import Security
 public struct EC256PrivateKey {
     
     fileprivate enum Errors: Error {
+        case unreadableData
         case dataIsNotBase64Encoded
         case privateKeyConversionFailed
         case invalidASN1
@@ -57,6 +58,22 @@ public struct EC256PrivateKey {
             SecKeyVerifySignature(publicKey, .ecdsaSignatureDigestX962SHA256, digest as CFData, asn1 as CFData, &error) else {
                 throw Errors.verificationFailed(underlyingError: error?.takeRetainedValue())
         }
+    }
+    
+}
+
+public extension EC256PrivateKey {
+    
+    init(pemFormatted: Data) throws {
+        guard let string = String(data: pemFormatted, encoding: .utf8) else {
+            throw Errors.unreadableData
+        }
+        try self.init(pemFormatted: string)
+    }
+    
+    init(contentsOf url: URL) throws {
+        let string = try String(contentsOf: url)
+        try self.init(pemFormatted: string)
     }
     
 }
