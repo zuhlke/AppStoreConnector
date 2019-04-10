@@ -1,6 +1,6 @@
 import Foundation
 
-final class AuthenticatedRequestGenerator {
+final class AuthenticatedRequestGenerator: RequestGenerator {
     
     private let baseURLComponents: URLComponents
     private let makeBearerToken: () -> String

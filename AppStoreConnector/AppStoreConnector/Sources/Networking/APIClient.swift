@@ -8,26 +8,17 @@ public class APIClient {
         case httpError(statusCode: Int)
     }
     
-    private let requestGenerator: AuthenticatedRequestGenerator
+    private let requestGenerator: RequestGenerator
+    private let networkingDelegate: NetworkingDelegate
     
-    public init(key: EC256PrivateKey, keyID: String, issuerID: String) {
-        let tokenGenerator = AuthTokenGenerator(
-            key: key,
-            keyID: keyID,
-            issuerID: issuerID
-        )
-        
-        requestGenerator = AuthenticatedRequestGenerator(host: "api.appstoreconnect.apple.com", path: "/v1") {
-            let expiryDate = Date(timeIntervalSinceNow: 60)
-            return try! tokenGenerator.token(expiryingAt: expiryDate)
-        }
-        
-        Logging.URLRequests = { _ in false }
+    init(requestGenerator: RequestGenerator, networkingDelegate: NetworkingDelegate) {
+        self.networkingDelegate = networkingDelegate
+        self.requestGenerator = requestGenerator
     }
     
     public func request(_ path: String) -> Observable<Data> {
         let request = requestGenerator.request(for: path)
-        return URLSession.shared.rx.response(request: request).map { (response, data) -> Data in
+        return networkingDelegate.response(for: request).map { (response, data) -> Data in
             switch response.statusCode {
             case 200..<300:
                 return data
@@ -37,4 +28,23 @@ public class APIClient {
         }
     }
 
+}
+
+public extension APIClient {
+    
+    convenience init(key: EC256PrivateKey, keyID: String, issuerID: String, networkingDelegate: NetworkingDelegate = URLSession.shared.rx) {
+        let tokenGenerator = AuthTokenGenerator(
+            key: key,
+            keyID: keyID,
+            issuerID: issuerID
+        )
+        
+        let requestGenerator = AuthenticatedRequestGenerator(host: "api.appstoreconnect.apple.com", path: "/v1") {
+            let expiryDate = Date(timeIntervalSinceNow: 60)
+            return try! tokenGenerator.token(expiryingAt: expiryDate)
+        }
+        
+        self.init(requestGenerator: requestGenerator, networkingDelegate: networkingDelegate)
+    }
+    
 }
