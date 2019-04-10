@@ -4,38 +4,36 @@ import RxCocoa
 
 public class APIClient {
     
-    private let tokenGenerator: AuthTokenGenerator
+    public enum Errors: Error {
+        case httpError(statusCode: Int)
+    }
     
-    private let baseURLComponents: URLComponents
+    private let requestGenerator: AuthenticatedRequestGenerator
     
     public init(key: EC256PrivateKey, keyID: String, issuerID: String) {
-        tokenGenerator = AuthTokenGenerator(
+        let tokenGenerator = AuthTokenGenerator(
             key: key,
             keyID: keyID,
             issuerID: issuerID
         )
         
-        baseURLComponents = mutating(URLComponents()) {
-            $0.scheme = "https"
-            $0.host = "api.appstoreconnect.apple.com"
-            $0.path = "/v1"
+        requestGenerator = AuthenticatedRequestGenerator(host: "api.appstoreconnect.apple.com", path: "/v1") {
+            let expiryDate = Date(timeIntervalSinceNow: 60)
+            return try! tokenGenerator.token(expiryingAt: expiryDate)
         }
+        
+        Logging.URLRequests = { _ in false }
     }
     
     public func request(_ path: String) -> Observable<Data> {
-        do {
-            let expiryDate = Date(timeIntervalSinceNow: 60)
-            let token = try tokenGenerator.token(expiryingAt: expiryDate)
-            let urlComponents = mutating(baseURLComponents) {
-                $0.path += path
+        let request = requestGenerator.request(for: path)
+        return URLSession.shared.rx.response(request: request).map { (response, data) -> Data in
+            switch response.statusCode {
+            case 200..<300:
+                return data
+            default:
+                throw Errors.httpError(statusCode: response.statusCode)
             }
-            
-            var request = URLRequest(url: urlComponents.url!)
-            request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-            
-            return URLSession.shared.rx.data(request: request)
-        } catch {
-            return Observable.error(error)
         }
     }
 

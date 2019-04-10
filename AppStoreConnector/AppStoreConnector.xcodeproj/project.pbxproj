@@ -19,6 +19,8 @@
 		89D1E547225E157800342450 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D1E546225E157800342450 /* RxBlocking.framework */; };
 		89D1E54A225E19B300342450 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D1E549225E19B300342450 /* APIClient.swift */; };
 		89D1E54D225E1AD300342450 /* Mutating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D1E54C225E1AD300342450 /* Mutating.swift */; };
+		89D1E550225E1E4000342450 /* AuthenticatedRequestGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D1E54F225E1E4000342450 /* AuthenticatedRequestGenerator.swift */; };
+		89D1E552225E1EE200342450 /* AuthenticatedRequestGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D1E551225E1EE200342450 /* AuthenticatedRequestGeneratorTests.swift */; };
 		89D7EDA2225C61E40095007B /* ES256Signature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D7EDA1225C61E40095007B /* ES256Signature.swift */; };
 		89D7EDA4225C98F90095007B /* ASN1Scanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D7EDA3225C98F90095007B /* ASN1Scanner.swift */; };
 		89D7EDA8225CC6C30095007B /* RxAtomic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D7EDA7225CC6C30095007B /* RxAtomic.framework */; };
@@ -64,6 +66,8 @@
 		89D1E546225E157800342450 /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89D1E549225E19B300342450 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		89D1E54C225E1AD300342450 /* Mutating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutating.swift; sourceTree = "<group>"; };
+		89D1E54F225E1E4000342450 /* AuthenticatedRequestGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatedRequestGenerator.swift; sourceTree = "<group>"; };
+		89D1E551225E1EE200342450 /* AuthenticatedRequestGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatedRequestGeneratorTests.swift; sourceTree = "<group>"; };
 		89D7EDA1225C61E40095007B /* ES256Signature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ES256Signature.swift; sourceTree = "<group>"; };
 		89D7EDA3225C98F90095007B /* ASN1Scanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASN1Scanner.swift; sourceTree = "<group>"; };
 		89D7EDA5225CC3950095007B /* All.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = All.xcconfig; sourceTree = "<group>"; };
@@ -203,6 +207,7 @@
 				8959A3F4225B4C0300EC2EA1 /* ProjectTests.swift */,
 				89D7EDA0225C5E080095007B /* Crypto */,
 				8959A3FF225B9CE900EC2EA1 /* Authentication */,
+				89D1E54E225E1DEE00342450 /* Networking */,
 				89D1E543225E103A00342450 /* Integration */,
 			);
 			path = Sources;
@@ -252,6 +257,7 @@
 		89D1E548225E197F00342450 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				89D1E54F225E1E4000342450 /* AuthenticatedRequestGenerator.swift */,
 				89D1E549225E19B300342450 /* APIClient.swift */,
 			);
 			path = Networking;
@@ -263,6 +269,14 @@
 				89D1E54C225E1AD300342450 /* Mutating.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		89D1E54E225E1DEE00342450 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				89D1E551225E1EE200342450 /* AuthenticatedRequestGeneratorTests.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		89D7ED9F225C5DF50095007B /* Crypto */ = {
@@ -406,6 +420,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8959A403225BA11400EC2EA1 /* EC256PrivateKey.swift in Sources */,
+				89D1E550225E1E4000342450 /* AuthenticatedRequestGenerator.swift in Sources */,
 				89D7EDA2225C61E40095007B /* ES256Signature.swift in Sources */,
 				89D1E54D225E1AD300342450 /* Mutating.swift in Sources */,
 				8959A40C225BE82100EC2EA1 /* Data+base64URLEncoded.swift in Sources */,
@@ -424,6 +439,7 @@
 				89D1E545225E105900342450 /* IntegrationTests.swift in Sources */,
 				8959A3F5225B4C0300EC2EA1 /* ProjectTests.swift in Sources */,
 				8959A401225B9CF600EC2EA1 /* EC256PrivateKeyTests.swift in Sources */,
+				89D1E552225E1EE200342450 /* AuthenticatedRequestGeneratorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

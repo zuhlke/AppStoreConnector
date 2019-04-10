@@ -25,7 +25,8 @@ private extension ProcessInfo {
 private class IntegrationContext {
     
     let client: APIClient
-    
+    let misconfiguredClient: APIClient
+
     private let _log: (String) -> Void
     
     init() {
@@ -40,7 +41,13 @@ private class IntegrationContext {
             issuerID: environment.issuerId
         )
         
-        var logBody = ""
+        misconfiguredClient = APIClient(
+            key: key,
+            keyID: environment.keyId,
+            issuerID: UUID().uuidString
+        )
+        
+        var logBody = "\(Date())\n"
         
         _log = { message in
             logBody.append(contentsOf: message)
@@ -57,11 +64,27 @@ private class IntegrationContext {
         log(String(data: data, encoding: .utf8)!)
     }
     
+    func log<T>(_ value: T) {
+        log("\(value)")
+    }
+    
 }
 
 class IntegrationTests: XCTestCase {
     
-    private let c = IntegrationContext()
+    private lazy var c = IntegrationContext()
+    
+    func testUsingMisconfiguredClientReturnsError() {
+        let request = c.misconfiguredClient.request("/apps")
+        do {
+            _ = try request.toBlocking().single()
+            XCTFail("Expected call to fail")
+        } catch APIClient.Errors.httpError(let statusCode) {
+            XCTAssertEqual(statusCode, 401)
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
+    }
     
     func testHittingBasicAPI() throws {
         let response = try c.client.request("/apps")
