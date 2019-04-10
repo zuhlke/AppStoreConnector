@@ -8,7 +8,7 @@ public class APIClient {
     
     private let baseURLComponents: URLComponents
     
-    init(key: EC256PrivateKey, keyID: String, issuerID: String) {
+    public init(key: EC256PrivateKey, keyID: String, issuerID: String) {
         tokenGenerator = AuthTokenGenerator(
             key: key,
             keyID: keyID,

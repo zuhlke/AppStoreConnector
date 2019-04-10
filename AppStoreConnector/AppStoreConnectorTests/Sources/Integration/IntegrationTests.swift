@@ -1,5 +1,5 @@
 import XCTest
-@testable import AppStoreConnector
+import AppStoreConnector
 import RxSwift
 import RxCocoa
 import RxBlocking
