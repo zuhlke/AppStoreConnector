@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-public class APIClient {
+public class Connection {
     
     public enum Errors: Error {
         case httpError(statusCode: Int)
@@ -30,7 +30,7 @@ public class APIClient {
 
 }
 
-public extension APIClient {
+public extension Connection {
     
     convenience init(key: EC256PrivateKey, keyID: String, issuerID: String, networkingDelegate: NetworkingDelegate = URLSession.shared.rx) {
         let tokenGenerator = AuthTokenGenerator(

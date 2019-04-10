@@ -24,8 +24,8 @@ private extension ProcessInfo {
 }
 private class IntegrationContext {
     
-    let client: APIClient
-    let misconfiguredClient: APIClient
+    let connection: Connection
+    let misconfiguredConnection: Connection
 
     private let _log: (String) -> Void
     
@@ -35,13 +35,13 @@ private class IntegrationContext {
         let keyFile = URL(fileURLWithPath: environment.keyFilePath)
         let key = try! EC256PrivateKey(contentsOf: keyFile)
         
-        client = APIClient(
+        connection = Connection(
             key: key,
             keyID: environment.keyId,
             issuerID: environment.issuerId
         )
         
-        misconfiguredClient = APIClient(
+        misconfiguredConnection = Connection(
             key: key,
             keyID: environment.keyId,
             issuerID: UUID().uuidString
@@ -75,11 +75,11 @@ class IntegrationTests: XCTestCase {
     private lazy var c = IntegrationContext()
     
     func testUsingMisconfiguredClientReturnsError() {
-        let request = c.misconfiguredClient.request("/apps")
+        let request = c.misconfiguredConnection.request("/apps")
         do {
             _ = try request.toBlocking().single()
             XCTFail("Expected call to fail")
-        } catch APIClient.Errors.httpError(let statusCode) {
+        } catch Connection.Errors.httpError(let statusCode) {
             XCTAssertEqual(statusCode, 401)
         } catch {
             XCTFail("Unexpected error: \(error)")
@@ -87,7 +87,7 @@ class IntegrationTests: XCTestCase {
     }
     
     func testHittingBasicAPI() throws {
-        let response = try c.client.request("/apps")
+        let response = try c.connection.request("/apps")
             .toBlocking().single()
         c.log(response)
     }

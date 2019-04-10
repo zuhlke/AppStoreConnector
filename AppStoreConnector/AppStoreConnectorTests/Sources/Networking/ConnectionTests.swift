@@ -27,7 +27,7 @@ private struct MockNetworkingDelegate: NetworkingDelegate {
     }
 }
 
-class APIClientTests: XCTestCase {
+class ConnectionTests: XCTestCase {
     
     func testHTTPErrorsAreCaptured() throws {
         let generator = MockRequestGenerator()
@@ -41,12 +41,12 @@ class APIClientTests: XCTestCase {
             data: Data()
         )
         
-        let client = APIClient(requestGenerator: generator, networkingDelegate: networkingDelegate)
+        let connection = Connection(requestGenerator: generator, networkingDelegate: networkingDelegate)
         
         do {
-            _ = try client.request("").toBlocking().single()
+            _ = try connection.request("").toBlocking().single()
             XCTFail("Expected call to fail")
-        } catch APIClient.Errors.httpError(let statusCode) {
+        } catch Connection.Errors.httpError(let statusCode) {
             XCTAssertEqual(statusCode, 403)
         } catch {
             XCTFail("Unexpected error: \(error)")
