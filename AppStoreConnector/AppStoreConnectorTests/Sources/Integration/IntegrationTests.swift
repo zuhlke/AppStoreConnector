@@ -24,7 +24,7 @@ private extension ProcessInfo {
 }
 private class IntegrationContext {
     
-    let tokenGenerator: AuthTokenGenerator
+    let client: APIClient
     
     private let _log: (String) -> Void
     
@@ -34,7 +34,7 @@ private class IntegrationContext {
         let keyFile = URL(fileURLWithPath: environment.keyFilePath)
         let key = try! EC256PrivateKey(contentsOf: keyFile)
         
-        tokenGenerator = AuthTokenGenerator(
+        client = APIClient(
             key: key,
             keyID: environment.keyId,
             issuerID: environment.issuerId
@@ -64,14 +64,7 @@ class IntegrationTests: XCTestCase {
     private let c = IntegrationContext()
     
     func testHittingBasicAPI() throws {
-        let expiryDate = Date(timeIntervalSinceNow: 60)
-        let token = try c.tokenGenerator.token(expiryingAt: expiryDate)
-        let url = URL(string: "https://api.appstoreconnect.apple.com/v1/apps")!
-        var request = URLRequest(url: url)
-        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        
-        let response = try URLSession.shared.rx
-            .data(request: request)
+        let response = try c.client.request("/apps")
             .toBlocking().single()
         c.log(response)
     }
