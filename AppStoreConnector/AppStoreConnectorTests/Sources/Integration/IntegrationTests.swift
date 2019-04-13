@@ -35,17 +35,17 @@ private class IntegrationContext {
         let keyFile = URL(fileURLWithPath: environment.keyFilePath)
         let key = try! EC256PrivateKey(contentsOf: keyFile)
         
-        connection = Connection(
+        connection = Client(
             key: key,
             keyID: environment.keyId,
             issuerID: environment.issuerId
-        )
+        ).connection
         
-        misconfiguredConnection = Connection(
+        misconfiguredConnection = Client(
             key: key,
             keyID: environment.keyId,
             issuerID: UUID().uuidString
-        )
+        ).connection
         
         var logBody = "\(Date())\n"
         

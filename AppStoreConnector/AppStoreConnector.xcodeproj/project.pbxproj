@@ -24,6 +24,7 @@
 		89D1E554225E2C9400342450 /* NetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D1E553225E2C9400342450 /* NetworkingDelegate.swift */; };
 		89D1E556225E2E4700342450 /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D1E555225E2E4700342450 /* ConnectionTests.swift */; };
 		89D1E558225E2E8200342450 /* RequestGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D1E557225E2E8200342450 /* RequestGenerator.swift */; };
+		89D1E55B225E56EC00342450 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D1E55A225E56EC00342450 /* Client.swift */; };
 		89D7EDA2225C61E40095007B /* ES256Signature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D7EDA1225C61E40095007B /* ES256Signature.swift */; };
 		89D7EDA4225C98F90095007B /* ASN1Scanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D7EDA3225C98F90095007B /* ASN1Scanner.swift */; };
 		89D7EDA8225CC6C30095007B /* RxAtomic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D7EDA7225CC6C30095007B /* RxAtomic.framework */; };
@@ -74,6 +75,7 @@
 		89D1E553225E2C9400342450 /* NetworkingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingDelegate.swift; sourceTree = "<group>"; };
 		89D1E555225E2E4700342450 /* ConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionTests.swift; sourceTree = "<group>"; };
 		89D1E557225E2E8200342450 /* RequestGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestGenerator.swift; sourceTree = "<group>"; };
+		89D1E55A225E56EC00342450 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		89D7EDA1225C61E40095007B /* ES256Signature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ES256Signature.swift; sourceTree = "<group>"; };
 		89D7EDA3225C98F90095007B /* ASN1Scanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASN1Scanner.swift; sourceTree = "<group>"; };
 		89D7EDA5225CC3950095007B /* All.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = All.xcconfig; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				89D7ED9F225C5DF50095007B /* Crypto */,
 				8959A3FC225B9C2500EC2EA1 /* Authentication */,
 				89D1E548225E197F00342450 /* Networking */,
+				89D1E559225E56D700342450 /* API */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -286,6 +289,14 @@
 				89D1E555225E2E4700342450 /* ConnectionTests.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		89D1E559225E56D700342450 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				89D1E55A225E56EC00342450 /* Client.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		89D7ED9F225C5DF50095007B /* Crypto */ = {
@@ -432,6 +443,7 @@
 				89D1E550225E1E4000342450 /* AuthenticatedRequestGenerator.swift in Sources */,
 				89D7EDA2225C61E40095007B /* ES256Signature.swift in Sources */,
 				89D1E554225E2C9400342450 /* NetworkingDelegate.swift in Sources */,
+				89D1E55B225E56EC00342450 /* Client.swift in Sources */,
 				89D1E54D225E1AD300342450 /* Mutating.swift in Sources */,
 				8959A40C225BE82100EC2EA1 /* Data+base64URLEncoded.swift in Sources */,
 				8959A405225BAD9A00EC2EA1 /* AuthTokenGenerator.swift in Sources */,
