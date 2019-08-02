@@ -16,7 +16,6 @@
 		8959A409225BAF7B00EC2EA1 /* SampleKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A408225BAF7B00EC2EA1 /* SampleKey.swift */; };
 		8959A40C225BE82100EC2EA1 /* Data+base64URLEncoded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8959A40B225BE82100EC2EA1 /* Data+base64URLEncoded.swift */; };
 		89D1E545225E105900342450 /* IntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D1E544225E105900342450 /* IntegrationTests.swift */; };
-		89D1E547225E157800342450 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D1E546225E157800342450 /* RxBlocking.framework */; };
 		89D1E54A225E19B300342450 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D1E549225E19B300342450 /* Connection.swift */; };
 		89D1E54D225E1AD300342450 /* Mutating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D1E54C225E1AD300342450 /* Mutating.swift */; };
 		89D1E550225E1E4000342450 /* AuthenticatedRequestGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D1E54F225E1E4000342450 /* AuthenticatedRequestGenerator.swift */; };
@@ -27,9 +26,6 @@
 		89D1E55B225E56EC00342450 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D1E55A225E56EC00342450 /* Client.swift */; };
 		89D7EDA2225C61E40095007B /* ES256Signature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D7EDA1225C61E40095007B /* ES256Signature.swift */; };
 		89D7EDA4225C98F90095007B /* ASN1Scanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D7EDA3225C98F90095007B /* ASN1Scanner.swift */; };
-		89D7EDA8225CC6C30095007B /* RxAtomic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D7EDA7225CC6C30095007B /* RxAtomic.framework */; };
-		89D7EDAA225CC6C30095007B /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D7EDA9225CC6C30095007B /* RxCocoa.framework */; };
-		89D7EDAC225CC6C30095007B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D7EDAB225CC6C30095007B /* RxSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +63,6 @@
 		8959A408225BAF7B00EC2EA1 /* SampleKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleKey.swift; sourceTree = "<group>"; };
 		8959A40B225BE82100EC2EA1 /* Data+base64URLEncoded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+base64URLEncoded.swift"; sourceTree = "<group>"; };
 		89D1E544225E105900342450 /* IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTests.swift; sourceTree = "<group>"; };
-		89D1E546225E157800342450 /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89D1E549225E19B300342450 /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		89D1E54C225E1AD300342450 /* Mutating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mutating.swift; sourceTree = "<group>"; };
 		89D1E54F225E1E4000342450 /* AuthenticatedRequestGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatedRequestGenerator.swift; sourceTree = "<group>"; };
@@ -79,9 +74,6 @@
 		89D7EDA1225C61E40095007B /* ES256Signature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ES256Signature.swift; sourceTree = "<group>"; };
 		89D7EDA3225C98F90095007B /* ASN1Scanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASN1Scanner.swift; sourceTree = "<group>"; };
 		89D7EDA5225CC3950095007B /* All.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = All.xcconfig; sourceTree = "<group>"; };
-		89D7EDA7225CC6C30095007B /* RxAtomic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxAtomic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		89D7EDA9225CC6C30095007B /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		89D7EDAB225CC6C30095007B /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,9 +81,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89D7EDA8225CC6C30095007B /* RxAtomic.framework in Frameworks */,
-				89D7EDAA225CC6C30095007B /* RxCocoa.framework in Frameworks */,
-				89D7EDAC225CC6C30095007B /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,7 +88,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89D1E547225E157800342450 /* RxBlocking.framework in Frameworks */,
 				8959A3D2225B49D800EC2EA1 /* AppStoreConnector.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,10 +309,6 @@
 		89D7EDA6225CC6C20095007B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				89D1E546225E157800342450 /* RxBlocking.framework */,
-				89D7EDA7225CC6C30095007B /* RxAtomic.framework */,
-				89D7EDA9225CC6C30095007B /* RxCocoa.framework */,
-				89D7EDAB225CC6C30095007B /* RxSwift.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

@@ -1,11 +1,11 @@
 import Foundation
-import RxSwift
-import RxCocoa
+import Combine
 
 public class Connection {
     
     public enum Errors: Error {
         case httpError(statusCode: Int)
+        case urlError(base: URLError)
     }
     
     private let requestGenerator: RequestGenerator
@@ -16,16 +16,20 @@ public class Connection {
         self.requestGenerator = requestGenerator
     }
     
-    public func request(_ path: String) -> Observable<Data> {
+    public func request(_ path: String) -> AnyPublisher<Data, Errors> {
         let request = requestGenerator.request(for: path)
-        return networkingDelegate.response(for: request).map { (response, data) -> Data in
-            switch response.statusCode {
+        return networkingDelegate.response(for: request)
+            .mapError { Errors.urlError(base: $0) }
+            .flatMap { res -> AnyPublisher<Data, Errors> in
+            switch res.response.statusCode {
             case 200..<300:
-                return data
+                return Just(res.data).mapError(absurd).eraseToAnyPublisher()
             default:
-                throw Errors.httpError(statusCode: response.statusCode)
+                return Fail(error: .httpError(statusCode: res.response.statusCode)).eraseToAnyPublisher()
             }
-        }
+            }.eraseToAnyPublisher()
     }
 
 }
+
+private func absurd<Result>(_ never: Never) -> Result {}

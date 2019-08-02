@@ -1,5 +1,5 @@
 import XCTest
-import RxSwift
+import Combine
 @testable import AppStoreConnector
 
 private struct MockRequestGenerator: RequestGenerator {
@@ -22,8 +22,8 @@ private struct MockNetworkingDelegate: NetworkingDelegate {
     var response: HTTPURLResponse
     var data: Data
     
-    func response(for request: URLRequest) -> Observable<(response: HTTPURLResponse, data: Data)> {
-        return Observable.just((response, data))
+    func response(for request: URLRequest) -> AnyPublisher<(response: HTTPURLResponse, data: Data), URLError> {
+        return Just((response, data)).mapError(absurd).eraseToAnyPublisher()
     }
 }
 
@@ -43,14 +43,27 @@ class ConnectionTests: XCTestCase {
         
         let connection = Connection(requestGenerator: generator, networkingDelegate: networkingDelegate)
         
-        do {
-            _ = try connection.request("").toBlocking().single()
-            XCTFail("Expected call to fail")
-        } catch Connection.Errors.httpError(let statusCode) {
-            XCTAssertEqual(statusCode, 403)
-        } catch {
-            XCTFail("Unexpected error: \(error)")
+        let expectation = self.expectation(description: "Request finishes")
+        let cancellation = connection.request("").sink(
+            receiveCompletion: { completion in
+                switch completion {
+                case .failure(.httpError(statusCode: 403)):
+                    expectation.fulfill()
+                case .failure(let error):
+                    XCTFail("Unexpected error: \(error)")
+                case .finished:
+                    XCTFail("Expected failure")
+                }
+        },
+            receiveValue: { _ in
+                XCTFail("Expected call to fail")
+        })
+        defer {
+            cancellation.cancel()
         }
+        waitForExpectations(timeout: 1, handler: nil)
     }
     
 }
+
+private func absurd<Result>(_ never: Never) -> Result {}

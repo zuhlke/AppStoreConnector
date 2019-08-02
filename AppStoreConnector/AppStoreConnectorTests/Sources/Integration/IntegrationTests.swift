@@ -1,8 +1,5 @@
 import XCTest
 import AppStoreConnector
-import RxSwift
-import RxCocoa
-import RxBlocking
 
 private struct Environment: Decodable {
     var keyId: String
@@ -22,6 +19,7 @@ private extension ProcessInfo {
     }
     
 }
+
 private class IntegrationContext {
     
     let connection: Connection
@@ -75,21 +73,50 @@ class IntegrationTests: XCTestCase {
     private lazy var c = IntegrationContext()
     
     func testUsingMisconfiguredClientReturnsError() {
-        let request = c.misconfiguredConnection.request("/apps")
-        do {
-            _ = try request.toBlocking().single()
-            XCTFail("Expected call to fail")
-        } catch Connection.Errors.httpError(let statusCode) {
-            XCTAssertEqual(statusCode, 401)
-        } catch {
-            XCTFail("Unexpected error: \(error)")
+        let response = c.misconfiguredConnection.request("/apps")
+        
+        let expectation = self.expectation(description: "Request finishes")
+        let cancellation = response.sink(
+            receiveCompletion: { completion in
+                switch completion {
+                case .failure(.httpError(statusCode: 401)):
+                    expectation.fulfill()
+                case .failure(let error):
+                    XCTFail("Unexpected error: \(error)")
+                case .finished:
+                    XCTFail("Expected failure")
+                }
+        },
+            receiveValue: { _ in
+                XCTFail("Expected call to fail")
+        })
+        defer {
+            cancellation.cancel()
         }
+        waitForExpectations(timeout: 1, handler: nil)
     }
     
     func testHittingBasicAPI() throws {
-        let response = try c.connection.request("/apps")
-            .toBlocking().single()
-        c.log(response)
+        let response = c.connection.request("/apps")
+        
+        let expectation = self.expectation(description: "Request finishes")
+        let cancellation = response.sink(
+            receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    XCTFail("Unexpected error: \(error)")
+                case .finished:
+                    expectation.fulfill()
+                }
+        },
+            receiveValue: { response in
+                self.c.log(response)
+        })
+        defer {
+            cancellation.cancel()
+        }
+        waitForExpectations(timeout: 30, handler: nil)
+
     }
     
 }

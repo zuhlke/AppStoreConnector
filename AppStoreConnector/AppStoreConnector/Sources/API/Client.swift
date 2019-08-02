@@ -12,7 +12,7 @@ public final class Client {
 
 public extension Client {
     
-    convenience init(key: EC256PrivateKey, keyID: String, issuerID: String, networkingDelegate: NetworkingDelegate = URLSession.shared.rx) {
+    convenience init(key: EC256PrivateKey, keyID: String, issuerID: String, networkingDelegate: NetworkingDelegate = URLSession.shared) {
         let tokenGenerator = AuthTokenGenerator(
             key: key,
             keyID: keyID,

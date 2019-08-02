@@ -27,6 +27,15 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "8959A3C7225B49D800EC2EA1"
+            BuildableName = "AppStoreConnector.framework"
+            BlueprintName = "AppStoreConnector"
+            ReferencedContainer = "container:AppStoreConnector/AppStoreConnector.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <Testables>
          <TestableReference
             skipped = "NO"
@@ -46,17 +55,6 @@
             </SkippedTests>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8959A3C7225B49D800EC2EA1"
-            BuildableName = "AppStoreConnector.framework"
-            BlueprintName = "AppStoreConnector"
-            ReferencedContainer = "container:AppStoreConnector/AppStoreConnector.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -77,8 +75,6 @@
             ReferencedContainer = "container:AppStoreConnector/AppStoreConnector.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

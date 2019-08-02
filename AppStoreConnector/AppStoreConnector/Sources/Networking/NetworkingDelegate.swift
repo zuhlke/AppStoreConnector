@@ -1,17 +1,19 @@
 import Foundation
-import RxSwift
-import RxCocoa
+import Combine
 
 public protocol NetworkingDelegate {
     
-    func response(for request: URLRequest) -> Observable<(response: HTTPURLResponse, data: Data)>
-    
+    func response(for request: URLRequest) -> AnyPublisher<(response: HTTPURLResponse, data: Data), URLError>
+        
 }
 
-extension Reactive: NetworkingDelegate where Base: URLSession {
+extension URLSession: NetworkingDelegate {
     
-    public func response(for request: URLRequest) -> Observable<(response: HTTPURLResponse, data: Data)> {
-        return self.response(request: request)
+    public func response(for request: URLRequest) -> AnyPublisher<(response: HTTPURLResponse, data: Data), URLError> {
+        return self.dataTaskPublisher(for: request)
+            .map { data, response in
+                (response as! HTTPURLResponse, data)
+            }.eraseToAnyPublisher()
     }
     
 }
