@@ -1,6 +1,5 @@
 import Foundation
-import CommonCrypto
-import Security
+import CryptoKit
 
 /// An elliptic curve private key
 public struct EC256PrivateKey {
@@ -12,11 +11,11 @@ public struct EC256PrivateKey {
         case invalidASN1
         case invalidPrivateKey(underlyingError: Error)
         case signingFailed(underlyingError: CFError?)
-        case verificationFailed(underlyingError: CFError?)
+        case verificationFailed
     }
     
     /// The key is guaranteed to be a 256-bit elliptic curve private key
-    private let key: SecKey
+    private let key: P256.Signing.PrivateKey
     
     /// Creates a private key
     ///
@@ -34,29 +33,14 @@ public struct EC256PrivateKey {
     }
     
     func sign(_ message: Data) throws -> ES256Signature {
-        
-        let digest = self.digest(for: message)
-        
-        var error: Unmanaged<CFError>?
-        
-        guard let signature = SecKeyCreateSignature(key, .ecdsaSignatureDigestX962SHA256, digest as CFData, &error) else {
-            throw Errors.signingFailed(underlyingError: error?.takeRetainedValue())
-        }
-        
-        return try ES256Signature(data: signature as Data, encoding: .asn1)
+        let signature = try key.signature(for: message)
+        return try ES256Signature(data: signature.derRepresentation, encoding: .asn1)
     }
     
     func verify(_ message: Data, hasSignature signature: ES256Signature) throws {
-        
-        let digest = self.digest(for: message)
-        let asn1 = signature.data(using: .asn1)
-        
-        var error: Unmanaged<CFError>?
-
-        guard
-            let publicKey = SecKeyCopyPublicKey(key),
-            SecKeyVerifySignature(publicKey, .ecdsaSignatureDigestX962SHA256, digest as CFData, asn1 as CFData, &error) else {
-                throw Errors.verificationFailed(underlyingError: error?.takeRetainedValue())
+        let cSignature = try P256.Signing.ECDSASignature(derRepresentation: signature.data(using: .asn1))
+        guard key.publicKey.isValidSignature(cSignature, for: message) else {
+                throw Errors.verificationFailed
         }
     }
     
@@ -74,16 +58,6 @@ public extension EC256PrivateKey {
     init(contentsOf url: URL) throws {
         let string = try String(contentsOf: url)
         try self.init(pemFormatted: string)
-    }
-    
-}
-
-private extension EC256PrivateKey {
-    
-    private func digest(for message: Data) -> Data {
-        var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
-        CC_SHA256((message as NSData).bytes, CC_LONG(message.count), &hash)
-        return Data(hash)
     }
     
 }
@@ -169,20 +143,12 @@ private struct EC256PrivateKeyScalars {
         y = publicKey[publicKey.startIndex+2+32..<publicKey.startIndex+2+32+32]
     }
     
-    func makePrivateKey() throws -> SecKey {
-        // See `SecKeyCopyExternalRepresentation`
+    func makePrivateKey() throws -> P256.Signing.PrivateKey {
         let data = Data([4]) + x + y + k
         
-        var error: Unmanaged<CFError>?
-        guard let privateKey =
-            SecKeyCreateWithData(data as CFData,
-                                 [kSecAttrKeyType: kSecAttrKeyTypeECSECPrimeRandom,
-                                  kSecAttrKeyClass: kSecAttrKeyClassPrivate,
-                                  kSecAttrKeySizeInBits: 256] as CFDictionary,
-                                 &error) else {
-                                    throw EC256PrivateKey.Errors.privateKeyConversionFailed
+        return try data.withUnsafeBytes { bytes in
+            try P256.Signing.PrivateKey(x963Representation: bytes)
         }
-        return privateKey
     }
     
 }
