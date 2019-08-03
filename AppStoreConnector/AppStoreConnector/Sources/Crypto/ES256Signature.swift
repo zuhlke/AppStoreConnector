@@ -1,4 +1,5 @@
 import Foundation
+import CryptoKit
 
 /// A signature made with ECDSA using P-256 and SHA-256.
 struct ES256Signature {
@@ -31,6 +32,10 @@ extension ES256Signature {
         self = try encoding.decode(data)
     }
     
+    init(_ signature: P256.Signing.ECDSASignature) throws {
+        try self.init(data: signature.derRepresentation, encoding: .der)
+    }
+    
 }
 
 extension ES256Signature.Encoding {
@@ -59,10 +64,11 @@ extension ES256Signature.Encoding {
     
     private static let asn1Sequence = UInt8(0x30)
     private static let asn1Integer = UInt8(0x02)
+    
     /// ASN.1 DER encoding
     ///
     /// Spec: https://tools.ietf.org/html/rfc5480#appendix-A
-    static let asn1 = ES256Signature.Encoding(
+    static let der = ES256Signature.Encoding(
         // Signature is encoded as:
         // ECDSA-Sig-Value ::= SEQUENCE {
         //   r  INTEGER,
@@ -109,5 +115,13 @@ extension ES256Signature.Encoding {
     }
     )
     
+    
+}
+
+extension P256.Signing.ECDSASignature {
+    
+    init(_ signature: ES256Signature) throws {
+        try self.init(derRepresentation: signature.data(using: .der))
+    }
     
 }

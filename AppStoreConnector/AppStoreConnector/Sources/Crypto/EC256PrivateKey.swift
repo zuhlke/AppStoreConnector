@@ -33,14 +33,13 @@ public struct EC256PrivateKey {
     }
     
     func sign(_ message: Data) throws -> ES256Signature {
-        let signature = try key.signature(for: message)
-        return try ES256Signature(data: signature.derRepresentation, encoding: .asn1)
+        return try ES256Signature(key.signature(for: message))
     }
     
     func verify(_ message: Data, hasSignature signature: ES256Signature) throws {
-        let cSignature = try P256.Signing.ECDSASignature(derRepresentation: signature.data(using: .asn1))
-        guard key.publicKey.isValidSignature(cSignature, for: message) else {
-                throw Errors.verificationFailed
+        let p256Signature = try P256.Signing.ECDSASignature(signature)
+        guard key.publicKey.isValidSignature(p256Signature, for: message) else {
+            throw Errors.verificationFailed
         }
     }
     
