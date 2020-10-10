@@ -1,9 +1,0 @@
-
-#include "../../../Shared/Configurations/Platforms/All.xcconfig"
-#include "../../../Shared/Configurations/Targets/Framework.xcconfig"
-
-PRODUCT_BUNDLE_IDENTIFIER = com.zuhlke.AppStoreConnector
-
-INFOPLIST_FILE = AppStoreConnector/Configurations/Info.plist
-
-DEVELOPMENT_TEAM = W46A5HMB5C

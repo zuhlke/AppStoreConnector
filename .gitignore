@@ -5,6 +5,3 @@
 xcuserdata
 *.xcuserstate
 *.xcscmblueprint
-
-# Carthage
-Checkouts
